@@ -1,14 +1,14 @@
 package ru.garant21.app.shop.Model.Entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "cards")
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

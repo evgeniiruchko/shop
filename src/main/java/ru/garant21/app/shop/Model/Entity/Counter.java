@@ -1,14 +1,15 @@
 package ru.garant21.app.shop.Model.Entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Counters")
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class Counter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +22,7 @@ public class Counter {
     @OneToOne
     @JoinColumn(name = "Cards_id")
     private Card card;
+
+    @OneToMany(mappedBy = "counter")
+    List<CounterChange> counterChanges;
 }

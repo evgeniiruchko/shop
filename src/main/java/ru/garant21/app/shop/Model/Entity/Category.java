@@ -1,7 +1,7 @@
 package ru.garant21.app.shop.Model.Entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "categories")
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
