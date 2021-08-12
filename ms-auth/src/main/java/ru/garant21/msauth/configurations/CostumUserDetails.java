@@ -6,8 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ru.garant21.msauth.enteties.Role;
 import ru.garant21.msauth.enteties.User;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 public class CostumUserDetails implements UserDetails {
     private String userName;
@@ -18,7 +19,11 @@ public class CostumUserDetails implements UserDetails {
         CostumUserDetails costumUserDetails = new CostumUserDetails();
         costumUserDetails.userName = user.getUsername();
         costumUserDetails.password = user.getPassword();
-        costumUserDetails.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRoles().toString()));
+        List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
+        for (Role role : user.getRoles()) {
+            authorityList.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        costumUserDetails.grantedAuthorities = authorityList;
         return costumUserDetails;
     }
 
