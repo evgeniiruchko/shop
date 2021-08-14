@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.garant21.core.interfaces.ITokenService;
 import ru.garant21.core.models.UserInfo;
+import ru.garant21.core.repositories.RedisRepository;
+
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +21,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private final ITokenService tokenService;
 
-    public JWTAuthenticationFilter(ITokenService tokenService) {
+    private final RedisRepository redisRepository;
+
+    public JWTAuthenticationFilter(ITokenService tokenService, RedisRepository redisRepository) {
+        this.redisRepository = redisRepository;
         this.tokenService = tokenService;
     }
 
@@ -43,7 +48,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean authorizationHeaderIsInvalid(String authorizationHeader) {
         return authorizationHeader == null
-                || !authorizationHeader.startsWith("Bearer ");
+                || !authorizationHeader.startsWith("Bearer ")
+                || redisRepository.checkToken(authorizationHeader);
     }
 
     private UsernamePasswordAuthenticationToken createToken(String authorizationHeader) throws ExpiredJwtException {
