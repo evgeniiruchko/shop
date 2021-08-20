@@ -6,6 +6,7 @@ import ru.garant21.products.dtos.ProductDto;
 import ru.garant21.products.entities.Product;
 import ru.garant21.products.repository.ProductsRepoInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,6 +42,16 @@ public class ProductService {
 
     public Product saveProduct (Product product) {
         return productsRepoInterface.save(product);
+    }
+
+    public List<ProductDto> getProductsBiIds(List<Long> listId) {
+        List<ProductDto> products = null;
+        for (Long id : listId) {
+            if (getProductById(id).isPresent()) {
+                products.add(getProductById(id).get());
+            }
+        }
+        return products;
     }
 
 }

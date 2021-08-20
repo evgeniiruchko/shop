@@ -38,6 +38,11 @@ public class ProductController {
         return productService.getProductBetweenPrices(priceMin, priceMax);
     }
 
+    @GetMapping("/get-from-orders")
+    public List<ProductDto> getProductsByListId(@RequestBody List<Long> listId) {
+        return productService.getProductsBiIds(listId);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteProductById(@PathVariable Long id) {
         productService.deleteById(id);
