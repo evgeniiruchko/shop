@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.garant21.products.dtos.ProductDto;
 import ru.garant21.products.entities.Product;
 import ru.garant21.products.repository.ProductsRepoInterface;
+import ru.garant21.routing.dtos.ListIdProducts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +45,9 @@ public class ProductService {
         return productsRepoInterface.save(product);
     }
 
-    public List<ProductDto> getProductsBiIds(List<Long> listId) {
+    public List<ProductDto> getProductsBiIds(ListIdProducts listId) {
         List<ProductDto> products = null;
-        for (Long id : listId) {
+        for (Long id : listId.getListId()) {
             if (getProductById(id).isPresent()) {
                 products.add(getProductById(id).get());
             }

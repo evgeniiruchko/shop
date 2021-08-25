@@ -8,7 +8,7 @@ import ru.garant21.products.dtos.ProductDto;
 
 @Aspect
 @Component
-public class aspectService {
+public class AspectService {
 
     @Before("execution(public * ru.garant21.products.controllers.ProductController.*(..))")
     public void beforeFindProductById(JoinPoint thisJoinPoint) {

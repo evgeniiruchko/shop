@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.garant21.orders.services.OrderClient;
 import ru.garant21.orders.services.OrderService;
 import ru.garant21.products.dtos.ProductDto;
+import ru.garant21.routing.dtos.ListIdProducts;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class OrderController {
     private final OrderClient orderClient;
 
     @GetMapping("/get-from-orders")
-    public List<ProductDto> getProductsByListId(List<Long> listId) {
+    public List<ProductDto> getProductsByListId(ListIdProducts listId) {
         return orderClient.getProductsByListId(orderService.getAllProducts());
     }
 }

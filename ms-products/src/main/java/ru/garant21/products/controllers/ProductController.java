@@ -7,6 +7,7 @@ import ru.garant21.core.exceptions.ResourceNotFoundException;
 import ru.garant21.products.dtos.ProductDto;
 import ru.garant21.products.entities.Product;
 import ru.garant21.products.services.ProductService;
+import ru.garant21.routing.dtos.ListIdProducts;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class ProductController {
     }
 
     @GetMapping("/get-from-orders")
-    public List<ProductDto> getProductsByListId(@RequestBody List<Long> listId) {
+    public List<ProductDto> getProductsByListId(@RequestBody ListIdProducts listId) {
         return productService.getProductsBiIds(listId);
     }
 
