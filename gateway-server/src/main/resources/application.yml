@@ -1,0 +1,47 @@
+server:
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      default-zone: ${EUREKA_URI:http://localhost:8761/eureka}
+
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    discovery:
+      enabled: true
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentails Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      metrics:
+        enabled: true
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: ms-auth
+          uri: lb://ms-auth
+          predicates:
+            -Path*/api/*/auth/**
+
+        - id: ms-products
+            uri: lb://ms-products
+            predicates:
+              -Path*/api/*/products/**
+
+        - id: ms-orders
+            uri: lb://ms-orders
+            predicates:
+              -Path*/api/*/orders/**
+    loadbalancer:
+      ribbon:
+        enabled: false
