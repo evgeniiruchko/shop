@@ -39,7 +39,7 @@ public class ProductController {
     }
 
     @GetMapping("/get-from-orders")
-    public List<ProductDto> getProductsByListId(@RequestBody List<Long> listId) {
+    public List<ProductDto> getProductsByListId(@RequestParam List<Long> listId) {
         return productService.getProductsBiIds(listId);
     }
 

@@ -20,6 +20,6 @@ public class OrderController {
 
     @GetMapping("/get-from-orders")
     public List<ProductDto> getProductsByListId(List<Long> listId) {
-        return orderClient.getProductsByListId(orderService.getAllProducts());
+        return orderClient.getProductsByListId(listId);
     }
 }
