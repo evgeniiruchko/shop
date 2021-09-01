@@ -1,4 +1,4 @@
-package ru.garant21.auth.dtos;
+package ru.garant21.routing.dtos;
 
 import lombok.Data;
 

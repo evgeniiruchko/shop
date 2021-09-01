@@ -2,12 +2,18 @@ package ru.garant21.orders.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "Orders")
+@Table(name = "orders")
 @Data
 @NoArgsConstructor
 public class Order {
@@ -16,39 +22,36 @@ public class Order {
     @Column(name = "id")
     private Long id;
 
-    @Column(name ="orderNumber")
-    private String orderNumber;
+    @Column(name = "user_id")
+    private Long userId;
 
-    @Column(name ="Users_Id")
-    private Long usersId;
+    @OneToMany(mappedBy = "order")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<OrderItem> items;
 
-    @Column(name ="Products_id")
-    private Long ProductId;
+    @Column(name = "address")
+    private String address;
 
-    @Column(name ="count")
-    private Double count;
-
-    @Column(name ="price")
+    @Column(name = "price")
     private Double price;
 
-    @Column(name ="sum")
-    private Double sum;
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-    @Column(name ="totalSum")
-    private Double totalSum;
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
-    @Column(name ="date")
-    private Date date;
-
-    @Column(name ="Delivery_id")
-    private Long DeliveryId;
-
-    @Column(name ="Payment_id")
-    private Long PaymentId;
-
-    @Column(name ="bonusAccrued")
-    private Double bonusAccrued;
-
-    @Column(name ="bonusPay")
-    private Double bonusPay;
+    public Order(Cart cart, Long userId, String address) {
+        this.items = new ArrayList<>();
+        this.userId = userId;
+        this.address = address;
+        this.price = cart.getPrice();
+        for (CartItem ci : cart.getItems()) {
+            OrderItem oi = new OrderItem(ci);
+            oi.setOrder(this);
+            this.items.add(oi);
+        }
+    }
 }

@@ -18,15 +18,15 @@
         <java.version>11</java.version>
         <io-jwt.version>0.9.1</io-jwt.version>
         <springdoc.version>1.5.10</springdoc.version>
-        <redis.version>2.5.3</redis.version>
-        <jedis.version>3.6.3</jedis.version>
-
+        <jedis.version>3.3.0</jedis.version>
+        <model-mapper.version>2.4.4</model-mapper.version>
+        <redis.version>2.5.4</redis.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,7 +50,6 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -75,17 +74,19 @@
             <version>${springdoc.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
             <version>${redis.version}</version>
         </dependency>
-
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>${jedis.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${model-mapper.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -99,6 +100,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

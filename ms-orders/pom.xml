@@ -22,14 +22,9 @@
             <version>0.0.1</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
             <groupId>ru.garant21</groupId>
-            <artifactId>ms-products</artifactId>
+            <artifactId>routing-lib</artifactId>
             <version>0.0.1</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

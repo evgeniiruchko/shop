@@ -1,11 +1,13 @@
 package ru.garant21.core.configurations.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.garant21.core.interfaces.ITokenService;
 import ru.garant21.core.models.UserInfo;
@@ -17,16 +19,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
+@RequiredArgsConstructor
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private final ITokenService tokenService;
 
     private final RedisRepository redisRepository;
-
-    public JWTAuthenticationFilter(ITokenService tokenService, RedisRepository redisRepository) {
-        this.redisRepository = redisRepository;
-        this.tokenService = tokenService;
-    }
 
     @SneakyThrows
     @Override

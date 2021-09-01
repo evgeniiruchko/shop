@@ -13,4 +13,5 @@ public interface ProductsRepoInterface extends JpaRepository<Product, Long>, Jpa
     List<Product> findProductByTitleContainingIgnoreCase(String title);
     List<Product> findAllByPriceBetween(Double priceMin, Double priceMax);
     Product findProductById(Long id);
+    List<Product> findByIdIn(List<Long> ids);
 }

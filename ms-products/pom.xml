@@ -10,20 +10,13 @@
 
     <artifactId>ms-products</artifactId>
     <version>0.0.1</version>
-    <name>products</name>
-    <properties>
-        <aspect.version>1.9.5</aspect.version>
-    </properties>
+    <name>ms-products</name>
+
     <dependencies>
         <dependency>
             <groupId>ru.garant21</groupId>
             <artifactId>core-lib</artifactId>
             <version>0.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspect.version}</version>
         </dependency>
     </dependencies>
 

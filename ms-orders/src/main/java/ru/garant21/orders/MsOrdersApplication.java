@@ -9,7 +9,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class MsOrdersApplication {
 
     public static void main(String[] args) {
-        System.out.println("test");
         SpringApplication.run(MsOrdersApplication.class, args);
     }
 

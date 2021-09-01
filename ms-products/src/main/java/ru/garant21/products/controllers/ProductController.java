@@ -1,13 +1,18 @@
 package ru.garant21.products.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ru.garant21.core.exceptions.ResourceNotFoundException;
-import ru.garant21.products.dtos.ProductDto;
+import ru.garant21.products.repository.specifications.ProductSpecifications;
+import ru.garant21.routing.dtos.ProductDto;
 import ru.garant21.products.entities.Product;
 import ru.garant21.products.services.ProductService;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -17,40 +22,41 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping ("/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ProductDto getProductById(@PathVariable Long id) {
-        return productService.getProductById(id).orElseThrow(() -> new ResourceNotFoundException("Товар с id = " + id + " Не найден"));
-    }
-
-    @GetMapping ("/title")
-    public List<Product> getProductByTitle(@RequestParam String title) {
-        return productService.getProductByTitle(title);
-    }
-
     @GetMapping
-    public List<ProductDto> getProductBeforeMaxPrice(@RequestParam(name = "min_price", defaultValue = "0") Double priceMin,
-                                                  @RequestParam(name = "max_price", required = false) Double priceMax)
-    {
-        if (priceMax == null) {
-            priceMax = Double.MAX_VALUE;
+    public Page<ProductDto> findAllProducts(
+            @RequestParam MultiValueMap<String, String> params,
+            @RequestParam(name = "p", defaultValue = "1") Integer page
+    ) {
+        if (page < 1) {
+            page = 1;
         }
-        return productService.getProductBetweenPrices(priceMin, priceMax);
+
+        return productService.findAll(ProductSpecifications.build(params), page, 4);
     }
 
-    @GetMapping("/get-from-orders")
-    public List<ProductDto> getProductsByListId(@RequestParam List<Long> listId) {
-        return productService.getProductsBiIds(listId);
+    @GetMapping("/{id}")
+    public ProductDto findProductById(@PathVariable Long id) {
+        return productService.findProductDtoById(id).get();
+    }
+
+    @GetMapping("/ids")
+    public List<ProductDto> findProductById(@RequestParam List<Long> ids) {
+        return productService.findProductDtosByIds(ids);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProductDto saveNewProduct(@RequestBody ProductDto product) throws ParseException {
+        return productService.saveOrUpdate(product);
+    }
+
+    @PutMapping
+    public ProductDto updateProduct(@RequestBody ProductDto product) throws ParseException {
+        return productService.saveOrUpdate(product);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProductById(@PathVariable Long id) {
+    public void updateProduct(@PathVariable Long id) {
         productService.deleteById(id);
-    }
-
-
-    @PostMapping
-    public Product addProduct(@RequestBody Product product) {
-            return productService.saveProduct(product);
     }
 }
