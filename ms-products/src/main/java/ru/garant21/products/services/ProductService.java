@@ -1,12 +1,16 @@
 package ru.garant21.products.services;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import ru.garant21.products.dtos.ProductDto;
+import ru.garant21.routing.dtos.ProductDto;
 import ru.garant21.products.entities.Product;
 import ru.garant21.products.repository.ProductsRepoInterface;
 
-import java.util.ArrayList;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,44 +18,36 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
+    private final ModelMapper modelMapper;
 
-    private final ProductsRepoInterface productsRepoInterface;
+    private final ProductsRepoInterface productRepository;
 
-    public int getCountProducts() {
-        return (int) productsRepoInterface.count();
+    public Optional<ProductDto> findProductDtoById(Long id) {
+        return productRepository.findById(id).map(this::toDto);
     }
 
-    public Optional<ProductDto> getProductById(Long id) {
-        return productsRepoInterface.findById(id).map(ProductDto::new);
+    public List<ProductDto> findProductDtosByIds(List<Long> ids) {
+        return productRepository.findByIdIn(ids).stream().map(this::toDto).collect(Collectors.toList());
     }
 
-    public List<Product> getProductByTitle(String title) {
-        return productsRepoInterface.findProductByTitleContainingIgnoreCase(title);
+    public Page<ProductDto> findAll(Specification<Product> spec, int page, int pageSize) {
+        return productRepository.findAll(spec, PageRequest.of(page - 1, pageSize)).map(this::toDto);
     }
 
-    //получаем массив ProductDto в диапозоне цен
-    public List<ProductDto> getProductBetweenPrices(Double priceMin, Double priceMax) {
-        return productsRepoInterface.findAllByPriceBetween(priceMin, priceMax).stream()
-                .map(ProductDto::new)
-                .collect(Collectors.toList());
+    public ProductDto saveOrUpdate(ProductDto product) throws ParseException {
+        return toDto(productRepository.save(toEntity(product)));
     }
 
-    public void deleteById (Long id) {
-        productsRepoInterface.deleteById(id);
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
     }
 
-    public Product saveProduct (Product product) {
-        return productsRepoInterface.save(product);
+    private ProductDto toDto(Product product) {
+        return modelMapper.map(product, ProductDto.class);
     }
 
-    public List<ProductDto> getProductsBiIds(List<Long> listId) {
-        List<ProductDto> products = null;
-        for (Long id : listId) {
-            if (getProductById(id).isPresent()) {
-                products.add(getProductById(id).get());
-            }
-        }
-        return products;
+    private Product toEntity(ProductDto productDto) throws ParseException {
+        return modelMapper.map(productDto, Product.class);
     }
 
 }

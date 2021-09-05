@@ -1,11 +1,11 @@
 package ru.garant21.auth.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.garant21.auth.dtos.AuthRequestDto;
-import ru.garant21.auth.dtos.AuthResponseDto;
-import ru.garant21.auth.dtos.SignUpRequestDto;
+import ru.garant21.routing.dtos.AuthRequestDto;
+import ru.garant21.routing.dtos.AuthResponseDto;
+import ru.garant21.routing.dtos.SignUpRequestDto;
 import ru.garant21.auth.enteties.User;
 import ru.garant21.auth.services.UserService;
 import ru.garant21.core.interfaces.ITokenService;
@@ -17,16 +17,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private ITokenService iTokenService;
+    private final ITokenService iTokenService;
 
-    @Autowired
-    private RedisRepository redisRepository;
+    private final RedisRepository redisRepository;
 
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
@@ -53,7 +51,7 @@ public class AuthController {
 
     @GetMapping("/logout")
     public Boolean logout(@RequestHeader("Authorization") String token) {
-        redisRepository.save(token);
+        redisRepository.saveToken(token);
         return true;
     }
 }

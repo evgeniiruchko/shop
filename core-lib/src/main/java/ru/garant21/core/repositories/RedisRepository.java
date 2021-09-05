@@ -1,26 +1,25 @@
 package ru.garant21.core.repositories;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import redis.clients.jedis.Jedis;
 
+import java.time.Duration;
 
-@Repository
+
+@Component
 @RequiredArgsConstructor
 public class RedisRepository {
 
-    final String TOKENS_SET = "tokens";
-    Jedis jedis = new Jedis();
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    public void clearCash() {
-        jedis.flushDB();
+    public void saveToken(String token) {
+        redisTemplate.opsForValue().set("token: " + token, 1, Duration.ofHours(1));
     }
 
-    public void save(String token) {
-        jedis.sadd(TOKENS_SET, token);
-    }
-
-    public boolean checkToken(String authorizationHeader) {
-        return jedis.sismember (TOKENS_SET, authorizationHeader);
+    public boolean checkToken(String token) {
+        return redisTemplate.opsForValue().get("token: " + token) != null;
     }
 }

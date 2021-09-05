@@ -1,10 +1,10 @@
 server:
-  port: 0
+  port: 5555
 
 eureka:
   client:
-    service-url:
-      default-zone: ${EUREKA_URI:http://localhost:8761/eureka}
+    fetch-registry: true
+    service-url.defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
 
 spring:
   application:
@@ -31,17 +31,17 @@ spring:
         - id: ms-auth
           uri: lb://ms-auth
           predicates:
-            -Path*/api/*/auth/**
+            -Path=/api/*/auth/**
 
         - id: ms-products
             uri: lb://ms-products
             predicates:
-              -Path*/api/*/products/**
+              -Path=/api/*/products/**
 
         - id: ms-orders
             uri: lb://ms-orders
             predicates:
-              -Path*/api/*/orders/**
+              -Path=/api/*/orders/**,/api/*/cart/**
     loadbalancer:
       ribbon:
         enabled: false

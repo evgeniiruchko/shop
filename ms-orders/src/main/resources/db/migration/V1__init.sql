@@ -26,3 +26,4 @@ INSERT INTO Orders (orderNumber, Users_Id, Products_id,count, price, totalSum, D
       ('000000002c', 2, 9, 2, 499.90, 999.8, 1, 1),
       ('000000003d', 2, 10, 2, 20.90, 41.8, 1, 1),
       ('000000003d', 2, 11, 1, 399.90, 399.9, 1, 1);
+
