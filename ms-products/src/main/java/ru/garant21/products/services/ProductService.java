@@ -8,7 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.garant21.routing.dtos.ProductDto;
 import ru.garant21.products.entities.Product;
-import ru.garant21.products.repository.ProductsRepoInterface;
+import ru.garant21.products.repository.ProductsRepository;
 
 import java.text.ParseException;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ModelMapper modelMapper;
 
-    private final ProductsRepoInterface productRepository;
+    private final ProductsRepository productRepository;
 
     public Optional<ProductDto> findProductDtoById(Long id) {
         return productRepository.findById(id).map(this::toDto);
