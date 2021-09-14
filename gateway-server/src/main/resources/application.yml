@@ -1,6 +1,5 @@
 spring:
   config:
     import: optional:configserver:http://localhost:8888
-
-jwt:
-  secret: A65fF$654asd3@3sOPd
+  application:
+    name: gateway-server
