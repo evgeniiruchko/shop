@@ -1,17 +1,9 @@
 package ru.garant21.orders.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-import ru.garant21.core.interfaces.ITokenService;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 import ru.garant21.core.models.UserInfo;
 import ru.garant21.orders.services.CartService;
 import ru.garant21.orders.services.OrderService;
@@ -28,12 +20,10 @@ public class OrderController {
 
     private final CartService cartService;
 
-    private final ITokenService tokenService;
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDto createOrderFromCart(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam UUID cartUuid, @RequestParam String address) {
-        UserInfo userInfo = tokenService.parseToken(token);
+    public OrderDto createOrderFromCart(@RequestParam UUID cartUuid, @RequestParam String address) {
+        UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         OrderDto orderDto = orderService.createFromUserCart(userInfo.getUserId(), cartUuid, address);
         cartService.clearCart(cartUuid);
         return orderDto;
@@ -45,8 +35,8 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<OrderDto> getCurrentUserOrders(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        UserInfo userInfo = tokenService.parseToken(token);
+    public List<OrderDto> getCurrentUserOrders() {
+        UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return orderService.findAllOrdersByUserId(userInfo.getUserId());
     }
 }

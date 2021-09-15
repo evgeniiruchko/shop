@@ -22,7 +22,7 @@ public class CartService {
     private final ProductClient productClient;
     private final ModelMapper modelMapper;
 
-    public Cart save (Cart cart) {
+    public Cart save(Cart cart) {
         return cartRepository.save(cart);
     }
 

@@ -3,14 +3,11 @@ package ru.garant21.products.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import ru.garant21.core.exceptions.ResourceNotFoundException;
 import ru.garant21.products.repository.specifications.ProductSpecifications;
-import ru.garant21.routing.dtos.ProductDto;
-import ru.garant21.products.entities.Product;
 import ru.garant21.products.services.ProductService;
+import ru.garant21.routing.dtos.ProductDto;
 
 import java.text.ParseException;
 import java.util.List;
