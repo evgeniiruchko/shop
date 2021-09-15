@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "cart_items")
-public class CartItem<LocalDateTime> {
+public class CartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,9 @@ public class CartItem<LocalDateTime> {
 
     @Column(name = "product_id")
     private long productId;
+
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "quantity")
     private Double quantity;
@@ -49,7 +52,7 @@ public class CartItem<LocalDateTime> {
         price = quantity * pricePerProduct;
     }
 
-    public void incrementQuantity(int amount) {
+    public void incrementQuantity(double amount) {
         quantity += amount;
         price = quantity * pricePerProduct;
     }

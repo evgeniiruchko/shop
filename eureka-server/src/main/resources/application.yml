@@ -5,7 +5,10 @@ eureka:
     register-with-eureka: false
     fetch-registry: false
 
-spring:
-  cloud:
-    config:
-      uri: http://localhost:8081
+jwt:
+  secret: A65fF$654asd3@3sOPd
+
+#spring:
+#  cloud:
+#    config:
+#      uri: http://localhost:8081
