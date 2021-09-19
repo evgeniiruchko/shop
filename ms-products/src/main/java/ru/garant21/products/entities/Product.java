@@ -15,40 +15,40 @@ public class Product {
     @Column(name = "id")
     private Long id;
 
-    @Column(name ="code")
+    @Column(name = "code")
     private Integer code;
 
-    @Column(name ="title")
+    @Column(name = "title")
     private String title;
 
-    @Column(name ="price")
+    @Column(name = "price")
     private Double price;
 
-    @Column(name ="remains")
+    @Column(name = "remains")
     private Double remains;
 
-    @Column(name ="isweight")
+    @Column(name = "isweight")
     private Boolean isWeight;
 
-    @Column(name ="minprice")
+    @Column(name = "minprice")
     private Double minPrice;
 
-    @Column(name ="maxdiscount")
+    @Column(name = "maxdiscount")
     private Double maxDiscount;
 
-    @Column(name ="picture")
+    @Column(name = "picture")
     private String picture;
 
-    @Column(name ="description")
+    @Column(name = "description")
     private String description;
 
-    @Column(name ="country")
+    @Column(name = "country")
     private String country;
 
-    @Column(name ="issale")
+    @Column(name = "issale")
     private Boolean isSale;
 
-    @Column(name ="oldprice")
+    @Column(name = "oldprice")
     private Double oldPrice;
 
     @ManyToOne

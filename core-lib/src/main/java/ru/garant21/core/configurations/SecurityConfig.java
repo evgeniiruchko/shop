@@ -1,7 +1,6 @@
 package ru.garant21.core.configurations;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -13,8 +12,6 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ru.garant21.core.configurations.jwt.JWTAuthenticationFilter;
-import ru.garant21.core.interfaces.ITokenService;
-import ru.garant21.core.repositories.RedisRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -30,10 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
-            .and()
+                .and()
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
 

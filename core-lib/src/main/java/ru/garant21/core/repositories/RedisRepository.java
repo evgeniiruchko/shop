@@ -3,8 +3,6 @@ package ru.garant21.core.repositories;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import redis.clients.jedis.Jedis;
 
 import java.time.Duration;
 

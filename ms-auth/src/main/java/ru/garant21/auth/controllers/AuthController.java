@@ -3,14 +3,14 @@ package ru.garant21.auth.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.garant21.routing.dtos.AuthRequestDto;
-import ru.garant21.routing.dtos.AuthResponseDto;
-import ru.garant21.routing.dtos.SignUpRequestDto;
 import ru.garant21.auth.enteties.User;
 import ru.garant21.auth.services.UserService;
 import ru.garant21.core.interfaces.ITokenService;
 import ru.garant21.core.models.UserInfo;
 import ru.garant21.core.repositories.RedisRepository;
+import ru.garant21.routing.dtos.AuthRequestDto;
+import ru.garant21.routing.dtos.AuthResponseDto;
+import ru.garant21.routing.dtos.SignUpRequestDto;
 
 import java.util.ArrayList;
 import java.util.List;
